@@ -1,8 +1,8 @@
-import { type ClassValue, clsx } from "clsx";
-import mongoose from "mongoose";
-import { twMerge } from "tailwind-merge";
-import _ from "lodash";
-import { BACKDROP_COLOR } from "@/constants";
+import { type ClassValue, clsx } from 'clsx';
+import _ from 'lodash';
+import mongoose from 'mongoose';
+import { twMerge } from 'tailwind-merge';
+import { BACKDROP_COLOR } from '@/constants';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -11,7 +11,7 @@ export function cn(...inputs: ClassValue[]) {
 export const numberFilter = (value: string | number) => _.isNumber(value);
 
 export const tmdbImageSrc = (src: string | undefined, imageSize: string) =>
-  src ? src.replace("/original/", `/${imageSize}/`) : "";
+  src ? src.replace('/original/', `/${imageSize}/`) : '';
 
 /**
  * Convert a hex color code to an rgba color code.
@@ -21,7 +21,7 @@ export const tmdbImageSrc = (src: string | undefined, imageSize: string) =>
  * @return {string} the rgba color code generated from the hex color code and alpha value
  */
 export const hexToRgba = (hex = BACKDROP_COLOR, alpha = 1) => {
-  const cleanHex = hex.replace("#", "");
+  const cleanHex = hex.replace('#', '');
   const normalizedAlpha = Math.max(0, Math.min(1, alpha));
 
   const hexToByte = parseInt(cleanHex, 16);

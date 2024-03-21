@@ -1,4 +1,4 @@
-import { ContentType, Status } from "@/constants";
+import { ContentType, Status } from '@/constants';
 
 export type MovieSchema = {
   _id: string;

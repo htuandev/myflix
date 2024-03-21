@@ -1,7 +1,8 @@
-"use client";
-import React from "react";
-import { Pagination as NextUIPagination } from "@nextui-org/react";
-import { usePathname, useRouter } from "next/navigation";
+'use client';
+
+import React from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { Pagination as NextUIPagination } from '@nextui-org/react';
 
 type Props = {
   page: string;
@@ -19,8 +20,8 @@ const Pagination = ({ page, totalPages }: Props) => {
         isCompact
         showControls
         showShadow
-        radius="full"
-        className="mt-4 overflow-x-auto"
+        radius='full'
+        className='mt-4 overflow-x-auto'
         onChange={(page) => {
           router.push(`${pathname}?page=${page}`);
         }}

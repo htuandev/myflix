@@ -1,43 +1,43 @@
-import { ContentType, Status, dbCollection, dbDocument } from "@/constants";
-import { numberFilter } from "@/lib/utils";
-import { MovieSchema } from "@/types";
-import { Schema, model, models } from "mongoose";
+import { Schema, model, models } from 'mongoose';
+import { ContentType, Status, dbCollection, dbDocument } from '@/constants';
+import { numberFilter } from '@/lib/utils';
+import { MovieSchema } from '@/types';
 
 const schema = new Schema<MovieSchema>(
   {
     _id: String,
     name: {
       type: String,
-      trim: true,
+      trim: true
     },
     slug: String,
     knownAs: [String],
     tmdb: {
       type: String,
-      index: true,
+      index: true
     },
     poster: String,
     thumbnail: {
       type: String,
-      default: "",
+      default: ''
     },
     backdrop: String,
     backdropColor: String,
     releaseDate: {
       type: String,
-      default: "",
+      default: ''
     },
     trailer: {
       type: String,
-      default: "",
+      default: ''
     },
     year: {
       type: Number,
-      index: true,
+      index: true
     },
     overview: {
       type: String,
-      trim: true,
+      trim: true
     },
     runtime: Number,
     totalEpisodes: Number,
@@ -45,28 +45,27 @@ const schema = new Schema<MovieSchema>(
       {
         type: Number,
         enum: Object.values(ContentType).filter(numberFilter),
-        index: true,
-      },
+        index: true
+      }
     ],
     status: {
       type: Number,
       enum: Object.values(Status).filter(numberFilter),
       index: true,
-      default: Status.Trailer,
+      default: Status.Trailer
     },
     genres: [{ type: String, ref: dbDocument.genre, index: true }],
     countries: [{ type: String, ref: dbDocument.country, index: true }],
     networks: [{ type: String, ref: dbDocument.network, index: true }],
     views: {
       type: Number,
-      default: 0,
-    },
+      default: 0
+    }
   },
   {
     collection: dbCollection.movie,
-    timestamps: true,
+    timestamps: true
   }
 );
 
-export const MovieModel =
-  models[dbDocument.movie] || model<MovieSchema>(dbDocument.movie, schema);
+export const MovieModel = models[dbDocument.movie] || model<MovieSchema>(dbDocument.movie, schema);

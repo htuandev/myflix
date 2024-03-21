@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const uri = `${process.env.URI}/${process.env.DB_NAME}?retryWrites=true&w=majority&appName=Myflix`;
 
@@ -9,7 +9,7 @@ const mongodb = async () => {
 
   try {
     await mongoose.connect(uri);
-    console.log("Mongodb connected");
+    console.log('Mongodb connected');
     return true;
   } catch (error) {
     console.log(error);
