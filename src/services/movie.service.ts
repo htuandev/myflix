@@ -1,8 +1,8 @@
 import { FilterQuery } from 'mongoose';
-import { PAGE_SIZE, Status } from '@/constants';
+import { Gender, PAGE_SIZE, Status } from '@/constants';
 import mongodb from '@/lib/mongodb';
 import { extractIdFromSlug } from '@/lib/utils';
-import { MovieModel } from '@/models';
+import { CreditModel, MovieModel } from '@/models';
 import { MovieSchema } from '@/types';
 
 export const fetchMovies = async (page = '1', filtered: FilterQuery<MovieSchema> = {}, pageSize = PAGE_SIZE) => {
@@ -71,5 +71,23 @@ export const fetchMovieDetail = async (slug: string) => {
 
   if (!movie) throw Error('Movie not found');
 
-  return { movie };
+  const credits = (await CreditModel.find({ movie: id })
+    .select('person character')
+    .populate('person', 'name slug gender profileImage')
+    .lean()) as {
+    _id: string;
+    person: { _id: string; name: string; slug: string; gender: Gender; profileImage: string };
+    character?: string;
+  }[];
+
+  const casts = credits.map((credit) => ({
+    _id: credit._id,
+    name: credit.person.name,
+    slug: credit.person.slug,
+    gender: credit.person.gender,
+    profileImage: credit.person.profileImage,
+    character: credit.character
+  }));
+
+  return { movie, casts };
 };

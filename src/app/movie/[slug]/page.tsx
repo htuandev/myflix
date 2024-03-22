@@ -2,15 +2,18 @@ import React from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { Play, PlayCircle } from 'lucide-react';
+import CastCard from '@/components/shared/CastCard';
 import MovieFacts from '@/components/shared/MovieFacts';
 import Poster from '@/components/shared/Poster';
+import Avatar from '@/components/shared/ProfileImage';
+import ProfileImage from '@/components/shared/ProfileImage';
 import { Button } from '@/components/ui/button';
 import { ContentType, Status } from '@/constants';
-import { hexToRgba, tmdbImageSrc } from '@/lib/utils';
+import { hexToRgba, lightenColor, tmdbImageSrc } from '@/lib/utils';
 import { fetchMovieDetail } from '@/services';
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const { movie } = await fetchMovieDetail(params.slug);
+  const { movie, casts } = await fetchMovieDetail(params.slug);
 
   const { name, year, poster, backdrop, thumbnail, overview } = movie;
 
@@ -26,7 +29,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 export default async function Page({ params }: { params: { slug: string } }) {
-  const { movie } = await fetchMovieDetail(params.slug);
+  const { movie, casts } = await fetchMovieDetail(params.slug);
   const episodes: { _id: string; slug: string }[] = [{ _id: '1', slug: 'episode-1' }];
 
   const { name, year, poster, backdrop, backdropColor, overview, slug, status, type } = movie;
@@ -41,7 +44,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <section>
-      <div className='relative z-10 flex-center text-opacity-95'>
+      <div className='flex-center relative z-10 text-opacity-95'>
         <div
           className=' absolute top-0 h-56 w-full overflow-hidden bg-cover bg-center bg-no-repeat md:h-full md:bg-[right_-180px_top]'
           style={styles.bg}
@@ -82,8 +85,21 @@ export default async function Page({ params }: { params: { slug: string } }) {
               <h3 className='mt-4 text-xl font-bold'>Overview</h3>
               <p className='mt-2'> {overview}</p>
             </div>
-          </div>  
+          </div>
         </div>
+      </div>
+
+      <div className='container pt-0'>
+        {casts.length > 0 && (
+          <div className='my-8'>
+            <h2 className=' mb-4 text-2xl font-medium'>Diễn viên</h2>
+            <div className=' grid grid-cols-3 gap-6 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10'>
+              {casts.map((cast) => (
+                <CastCard key={cast._id} {...cast} />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
