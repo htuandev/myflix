@@ -3,7 +3,7 @@ import { ContentType, Status, dbCollection, dbDocument } from '@/constants';
 import { numberFilter } from '@/lib/utils';
 import { MovieSchema } from '@/types';
 
-const schema = new Schema<MovieSchema>(
+const movieSchema = new Schema<MovieSchema>(
   {
     _id: String,
     name: {
@@ -68,4 +68,4 @@ const schema = new Schema<MovieSchema>(
   }
 );
 
-export const MovieModel = models[dbDocument.movie] || model<MovieSchema>(dbDocument.movie, schema);
+export const MovieModel = models[dbDocument.movie] || model<MovieSchema>(dbDocument.movie, movieSchema);

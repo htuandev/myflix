@@ -60,26 +60,32 @@ export const lightenColor = (inputColor: string, percentage = 12): string => {
   return rgbToHex([lightenR, lightenG, lightenB]);
 };
 
+/**
+ * Extracts the ID from the given slug.
+ *
+ * @param {string} slug - The input slug
+ * @return {string} The extracted ID
+ */
 export const extractIdFromSlug = (slug: string): string => {
-  // Regular expression to match the ID pattern
-  const idPattern = /[a-zA-Z0-9]+$/;
-
-  // Use match method to find matches in the slug
-  const matches = slug.match(idPattern);
-
-  // If matches are found, return the first match
-  // If no matches are found, return an empty string
-  return matches ? matches[0] : '';
+  const lastIndex = slug.lastIndexOf('-');
+  return lastIndex === -1 ? '' : slug.slice(lastIndex + 1);
 };
 
 /**
- * Converts the given runtime in minutes to a formatted string representation of hours and minutes.
+ * Converts a given number of minutes into a formatted string representing the time duration.
  *
- * @param {number} mins - The runtime in minutes to convert.
- * @return {string} The formatted string representation of the runtime in hours and minutes.
+ * @param {number} minutes - The number of minutes to be converted.
+ * @return {string} The formatted string representing the time duration.
  */
-export const convertRuntime = (mins: number): string => {
-  const hours = Math.floor(mins / 60);
-  const min = mins % 60;
-  return hours === 0 ? `${min}m` : `${hours}h ${min}m`;
+export const convertRuntime = (minutes: number): string => {
+  const hours = Math.floor(minutes / 60);
+  const remainingMinutes = minutes % 60;
+
+  return hours === 0
+    ? `${minutes}m`
+    : hours === 1 && remainingMinutes === 0
+      ? '60m'
+      : remainingMinutes === 0
+        ? `${hours}h`
+        : `${hours}h ${remainingMinutes}m`;
 };

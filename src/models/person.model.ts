@@ -36,4 +36,4 @@ const personSchema = new Schema<PersonSchema>(
   }
 );
 
-export const personModel = models[dbDocument.person] || model<PersonSchema>(dbDocument.person, personSchema);
+export const PersonModel = models[dbDocument.person] || model<PersonSchema>(dbDocument.person, personSchema);

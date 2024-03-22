@@ -22,4 +22,4 @@ const episodeSchema = new Schema<EpisodeSchema>(
   }
 );
 
-export const episodeModel = models[dbDocument.episode] || model<EpisodeSchema>(dbDocument.episode, episodeSchema);
+export const EpisodeModel = models[dbDocument.episode] || model<EpisodeSchema>(dbDocument.episode, episodeSchema);

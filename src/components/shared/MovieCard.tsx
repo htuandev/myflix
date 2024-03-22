@@ -6,7 +6,7 @@ import Poster from './Poster';
 const MovieCard = ({ _id, name, slug, poster, backdropColor }: MovieSchema) => {
   return (
     <Link
-      href={`/movie/${slug}-${_id}`}
+      href={`/album/${slug}-${_id}`}
       style={{ backgroundColor: lightenColor(backdropColor) }}
       className=' max-w-full overflow-hidden rounded-lg'
     >
