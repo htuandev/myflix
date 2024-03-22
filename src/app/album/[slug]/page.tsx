@@ -1,17 +1,17 @@
 import React from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { Play, PlayCircle } from 'lucide-react';
+import { Play } from 'lucide-react';
 import { FilterQuery } from 'mongoose';
 import CastCard from '@/components/shared/CastCard';
 import EpisodeList from '@/components/shared/EpisodeList';
 import MovieCard from '@/components/shared/MovieCard';
 import MovieFacts from '@/components/shared/MovieFacts';
 import Poster from '@/components/shared/Poster';
+import YoutubeModal from '@/components/shared/YoutubeModal';
 import { Button } from '@/components/ui/button';
 import { ContentType, Status } from '@/constants';
 import { hexToRgba, tmdbImageSrc } from '@/lib/utils';
-import { EpisodeModel } from '@/models';
 import { fetchMovieDetail, fetchRandomMovies } from '@/services';
 import { MovieSchema } from '@/types';
 
@@ -91,9 +91,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                   </Link>
                 )}
 
-                <Button variant='ghost'>
-                  <PlayCircle className='mr-2 h-4 w-4' /> Trailer
-                </Button>
+                <YoutubeModal trailer={movie.trailer} />
               </div>
 
               <h3 className='mt-4 text-xl font-bold'>Overview</h3>
