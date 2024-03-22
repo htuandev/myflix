@@ -7,16 +7,16 @@ import { MovieSchema, NextQuery } from '@/types';
 
 export async function generateMetadata({ searchParams }: { searchParams: NextQuery }): Promise<Metadata> {
   return {
-    title: `Top Phim Bộ Hay Mới Nhất ${CURRENT_YEAR}${Number(searchParams.page) > 1 ? ` - Trang ${searchParams.page}` : ''} | Myflix`
+    title: `Top Phim Lẻ Hay Mới Nhất ${CURRENT_YEAR}${Number(searchParams.page) > 1 ? ` - Trang ${searchParams.page}` : ''} | Myflix`
   };
 }
 
 export default async function Page({ searchParams }: { searchParams: NextQuery }) {
-  const { movies, totalPages } = await fetchMovies(searchParams.page, { type: ContentType.Series });
+  const { movies, totalPages } = await fetchMovies(searchParams.page, { type: ContentType.Single });
 
   return (
     <section className=' container flex min-h-screen flex-col'>
-      <h1 className='text-heading mb-6 text-center'>Phim Bộ Mới Cập Nhật</h1>
+      <h1 className='text-heading mb-6 text-center'>Phim Lẻ Mới Cập Nhật</h1>
       <div className=' flex-1'>
         <div className=' grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>
           {movies.map((movie) => (

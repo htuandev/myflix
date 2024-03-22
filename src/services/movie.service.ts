@@ -5,7 +5,11 @@ import { extractIdFromSlug } from '@/lib/utils';
 import { CreditModel, EpisodeModel, MovieModel } from '@/models';
 import { IEpisodeList, MovieDetail, MovieSchema, Prettify } from '@/types';
 
-export const fetchMovies = async (page = '1', filtered: FilterQuery<MovieSchema> = {}, pageSize = PAGE_SIZE) => {
+export const fetchMovies = async (
+  page = '1',
+  filtered: FilterQuery<MovieSchema> = {},
+  pageSize = PAGE_SIZE
+): Promise<{ movies: MovieSchema[]; totalPages: number; totalMovies: number }> => {
   try {
     await mongodb();
 
@@ -21,13 +25,13 @@ export const fetchMovies = async (page = '1', filtered: FilterQuery<MovieSchema>
 
     const skip = (pageNumber - 1) * pageSize;
 
-    const movies = await MovieModel.find(filtered)
+    const movies = (await MovieModel.find(filtered)
       .find({ status: { $ne: Status.Trailer }, ...filtered })
       .sort({ updatedAt: 'desc' })
       .select(' name slug poster backdropColor')
       .skip(skip)
       .limit(pageSize)
-      .lean();
+      .lean()) as Prettify<MovieSchema>[];
 
     return { movies, totalPages, totalMovies };
   } catch (error) {

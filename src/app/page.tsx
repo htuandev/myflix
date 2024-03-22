@@ -1,17 +1,14 @@
 import Link from 'next/link';
 import MovieCard from '@/components/shared/MovieCard';
-import { ContentType } from '@/constants';
+import { CURRENT_YEAR, ContentType } from '@/constants';
 import { fetchMovies, fetchRandomMovies } from '@/services';
-import { MovieSchema } from '@/types';
 
 export default async function Home() {
   const series = await fetchMovies('1', { type: ContentType.Series }, 12);
   const single = await fetchMovies('1', { type: ContentType.Single }, 12);
   const vietnamese = await fetchMovies('1', { type: ContentType.Vietnamese }, 6);
   const animation = await fetchMovies('1', { type: ContentType.Animation }, 6);
-  const tenYearsAgoMovies = await fetchRandomMovies({
-    year: { $lt: new Date().getFullYear() - 10, $nin: [0] }
-  });
+  const tenYearsAgoMovies = await fetchRandomMovies({ year: { $lt: CURRENT_YEAR - 10, $nin: [0] } });
 
   return (
     <main className='container'>
@@ -20,7 +17,7 @@ export default async function Home() {
       </Link>
       <div className=' grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>
         {series.movies.map((movie) => (
-          <MovieCard {...(movie as MovieSchema)} key={movie._id as string} />
+          <MovieCard {...movie} key={movie._id} />
         ))}
       </div>
 
@@ -29,7 +26,7 @@ export default async function Home() {
       </Link>
       <div className=' grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>
         {single.movies.map((movie) => (
-          <MovieCard {...(movie as MovieSchema)} key={movie._id as string} />
+          <MovieCard {...movie} key={movie._id} />
         ))}
       </div>
 
@@ -38,7 +35,7 @@ export default async function Home() {
       </Link>
       <div className=' grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>
         {vietnamese.movies.map((movie) => (
-          <MovieCard {...(movie as MovieSchema)} key={movie._id as string} />
+          <MovieCard {...movie} key={movie._id} />
         ))}
       </div>
 
@@ -47,7 +44,7 @@ export default async function Home() {
       </Link>
       <div className=' grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>
         {animation.movies.map((movie) => (
-          <MovieCard {...(movie as MovieSchema)} key={movie._id as string} />
+          <MovieCard {...movie} key={movie._id} />
         ))}
       </div>
 
@@ -56,7 +53,7 @@ export default async function Home() {
       </Link>
       <div className=' grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>
         {tenYearsAgoMovies.map((movie) => (
-          <MovieCard {...(movie as MovieSchema)} key={movie._id as string} />
+          <MovieCard {...movie} key={movie._id} />
         ))}
       </div>
     </main>
