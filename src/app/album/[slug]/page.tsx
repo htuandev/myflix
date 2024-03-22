@@ -13,9 +13,9 @@ import { Button } from '@/components/ui/button';
 import { ContentType, Status } from '@/constants';
 import { hexToRgba, tmdbImageSrc } from '@/lib/utils';
 import { fetchMovieDetail, fetchRandomMovies } from '@/services';
-import { MovieSchema } from '@/types';
+import { MovieSchema, NextQuery } from '@/types';
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: NextQuery }): Promise<Metadata> {
   const { movie } = await fetchMovieDetail(params.slug);
 
   const { name, year, poster, backdrop, thumbnail, overview } = movie;
@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page({ params }: { params: NextQuery }) {
   const { movie, casts, episodes } = await fetchMovieDetail(params.slug);
 
   const { name, year, poster, backdrop, backdropColor, overview, slug, status, type } = movie;

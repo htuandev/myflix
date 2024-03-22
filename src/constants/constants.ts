@@ -1,6 +1,7 @@
 export const PAGE_SIZE = 24;
 
 export const METADATA_TITLE = 'Myflix - Xem phim online';
+export const CURRENT_YEAR = new Date().getFullYear();
 
 export const TMDB_IMAGE_SIZES = {
   poster: {
