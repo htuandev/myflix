@@ -6,7 +6,6 @@ const episodeSchema = new Schema<EpisodeSchema>(
   {
     _id: String,
     name: String,
-    title: String,
     slug: String,
     movie: {
       type: String,

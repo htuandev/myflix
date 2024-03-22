@@ -4,17 +4,19 @@ import Link from 'next/link';
 import { Play, PlayCircle } from 'lucide-react';
 import { FilterQuery } from 'mongoose';
 import CastCard from '@/components/shared/CastCard';
+import EpisodeList from '@/components/shared/EpisodeList';
 import MovieCard from '@/components/shared/MovieCard';
 import MovieFacts from '@/components/shared/MovieFacts';
 import Poster from '@/components/shared/Poster';
 import { Button } from '@/components/ui/button';
 import { ContentType, Status } from '@/constants';
 import { hexToRgba, tmdbImageSrc } from '@/lib/utils';
+import { EpisodeModel } from '@/models';
 import { fetchMovieDetail, fetchRandomMovies } from '@/services';
 import { MovieSchema } from '@/types';
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const { movie, casts } = await fetchMovieDetail(params.slug);
+  const { movie } = await fetchMovieDetail(params.slug);
 
   const { name, year, poster, backdrop, thumbnail, overview } = movie;
 
@@ -30,8 +32,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 export default async function Page({ params }: { params: { slug: string } }) {
-  const { movie, casts } = await fetchMovieDetail(params.slug);
-  const episodes: { _id: string; slug: string }[] = [{ _id: '1', slug: 'episode-1' }];
+  const { movie, casts, episodes } = await fetchMovieDetail(params.slug);
 
   const { name, year, poster, backdrop, backdropColor, overview, slug, status, type } = movie;
 
@@ -49,10 +50,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   const styles: { [key: string]: React.CSSProperties } = {
     bg: { backgroundImage: `url(${tmdbImageSrc(backdrop, 'w1920_and_h800_multi_faces')})` },
-    bgColor: {
+    bgImgColor: {
       backgroundImage: `linear-gradient(to right, ${backdropColor} calc((50vw - 180px) - 300px), ${hexToRgba(backdropColor, 0.84)} 50%, ${hexToRgba(backdropColor, 0.84)} 100%)`
     },
-    poster: { backgroundColor: backdropColor }
+    bgColor: { backgroundColor: backdropColor }
   };
 
   return (
@@ -62,13 +63,13 @@ export default async function Page({ params }: { params: { slug: string } }) {
           className=' absolute top-0 h-56 w-full overflow-hidden bg-cover bg-center bg-no-repeat md:h-full md:bg-[right_-180px_top]'
           style={styles.bg}
         >
-          <div style={styles.bgColor} className=' absolute inset-0' />
+          <div style={styles.bgImgColor} className=' absolute inset-0' />
         </div>
         <div className='container'>
           <div className=' flex flex-wrap items-center md:flex-nowrap'>
             <div className='relative mb-6 w-full md:mb-0 md:w-[300px]'>
               <div className=' w-32 md:mx-auto md:w-[300px]'>
-                <Poster src={poster} alt={name} size='lg' style={styles.poster} />
+                <Poster src={poster} alt={name} size='lg' style={styles.bgColor} />
               </div>
             </div>
             <div className='relative z-10 w-full md:ml-8 md:w-auto'>
@@ -108,18 +109,27 @@ export default async function Page({ params }: { params: { slug: string } }) {
             <h2 className=' mb-4 text-2xl font-medium'>Diễn viên</h2>
             <div className=' grid grid-cols-3 gap-6 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10'>
               {casts.map((cast) => (
-                <CastCard key={cast._id} {...cast} style={{ backgroundColor: backdropColor }} />
+                <CastCard key={cast._id} {...cast} style={styles.bgColor} />
               ))}
             </div>
           </div>
         )}
+
+        <EpisodeList
+          episodes={episodes}
+          type={type}
+          movieName={name}
+          movieSlug={slug}
+          currentEpisodeId={episodes[0]._id}
+          style={styles.bgColor}
+        />
 
         {recommended.length > 0 && (
           <div className='mt-8'>
             <h2 className=' mb-4 text-2xl font-medium'>Đề xuất cho bạn</h2>
             <div className=' grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>
               {recommended.map((movie) => (
-                <MovieCard {...(movie as MovieSchema)} key={movie._id as string} />
+                <MovieCard {...(movie as MovieSchema)} key={movie._id} />
               ))}
             </div>
           </div>

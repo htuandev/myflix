@@ -89,3 +89,15 @@ export const convertRuntime = (minutes: number): string => {
         ? `${hours}h`
         : `${hours}h ${remainingMinutes}m`;
 };
+
+/**
+ * Splits an array into smaller arrays of a specified size.
+ *
+ * @param {T[]} array - The array to be split.
+ * @param {number} chunkSize - The size of each chunk.
+ * @return {T[][]} An array of arrays, where each inner array has a length of chunkSize.
+ */
+export const chunkArray = <T>(array: T[], chunkSize: number): T[][] =>
+  Array.from({ length: Math.ceil(array.length / chunkSize) }, (_, index) =>
+    array.slice(index * chunkSize, (index + 1) * chunkSize)
+  );

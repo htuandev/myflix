@@ -2,8 +2,8 @@ import { FilterQuery } from 'mongoose';
 import { Gender, PAGE_SIZE, Status } from '@/constants';
 import mongodb from '@/lib/mongodb';
 import { extractIdFromSlug } from '@/lib/utils';
-import { CreditModel, MovieModel } from '@/models';
-import { MovieDetail, MovieSchema, Prettify } from '@/types';
+import { CreditModel, EpisodeModel, MovieModel } from '@/models';
+import { IEpisodeList, MovieDetail, MovieSchema, Prettify } from '@/types';
 
 export const fetchMovies = async (page = '1', filtered: FilterQuery<MovieSchema> = {}, pageSize = PAGE_SIZE) => {
   try {
@@ -71,6 +71,8 @@ export const fetchMovieDetail = async (slug: string) => {
 
   if (!movie) throw Error('Movie not found');
 
+  movie.episodes = await EpisodeModel.countDocuments({ movie: id });
+
   const credits = (await CreditModel.find({ movie: id })
     .select('person character')
     .populate('person', 'name slug gender profileImage')
@@ -89,5 +91,7 @@ export const fetchMovieDetail = async (slug: string) => {
     character: credit.character
   }));
 
-  return { movie, casts };
+  const episodes = (await EpisodeModel.find({ movie: id }).select('name slug thumbnail').lean()) as IEpisodeList;
+
+  return { movie, casts, episodes };
 };
