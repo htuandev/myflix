@@ -22,7 +22,7 @@ const ProfileImage = ({ src, gender, alt, className, style, size = 'sm' }: Props
     <Image
       className={cn(' pointer-events-none aspect-square select-none overflow-hidden rounded-full', className)}
       style={style}
-      src={tmdbImageSrc(src, imageSize)}
+      src={tmdbImageSrc(src, imageSize) || defaultUrl}
       alt={alt || 'No image'}
       priority
       width={size === 'sm' ? 235 : size === 'md' ? 375 : 470}

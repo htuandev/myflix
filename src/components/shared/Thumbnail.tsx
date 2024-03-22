@@ -24,7 +24,7 @@ const Thumbnail = ({ src, alt, className, style, size = 'sm' }: Props) => {
         className
       )}
       style={style}
-      src={tmdbImageSrc(src, imageSize)}
+      src={tmdbImageSrc(src, imageSize) || BASE64_THUMBNAIL}
       alt={alt || 'No image'}
       priority
       width={size === 'sm' ? 320 : size === 'md' ? 640 : 1280}

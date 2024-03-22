@@ -23,7 +23,7 @@ const Poster = ({ src, alt, className, style, size = 'sm' }: Props) => {
         className
       )}
       style={style}
-      src={tmdbImageSrc(src, imageSize)}
+      src={tmdbImageSrc(src, imageSize) || BASE64_POSTER}
       alt={alt || 'No image'}
       priority
       width={size === 'sm' ? 300 : size === 'md' ? 440 : 600}
