@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import { ContentType, Status } from '@/constants';
 import { convertRuntime } from '@/lib/utils';
-import { CategorySchema, MovieSchema } from '@/types';
+import { CategorySchema, MovieDetail } from '@/types';
 
-const MovieFacts = (movie: MovieSchema) => {
+const MovieFacts = (movie: MovieDetail) => {
   const Separator = () => <li className='mx-2 text-base font-normal'>•</li>;
 
   const { knownAs, runtime, status, type, totalEpisodes, episodes, genres, networks } = movie;

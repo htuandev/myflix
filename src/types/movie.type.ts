@@ -1,4 +1,5 @@
 import { ContentType, Status } from '@/constants';
+import { Prettify } from '.';
 
 export type MovieSchema = {
   _id: string;
@@ -24,3 +25,11 @@ export type MovieSchema = {
   networks: string[];
   views: number;
 };
+
+export type MovieDetail = Prettify<
+  Omit<MovieSchema, 'genres' | 'countries' | 'networks'> & {
+    genres: { _id: string; name: string; slug: string }[];
+    countries: { _id: string; name: string; slug: string }[];
+    networks: { _id: string; name: string; slug: string }[];
+  }
+>;

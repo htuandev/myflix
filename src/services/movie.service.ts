@@ -3,7 +3,7 @@ import { Gender, PAGE_SIZE, Status } from '@/constants';
 import mongodb from '@/lib/mongodb';
 import { extractIdFromSlug } from '@/lib/utils';
 import { CreditModel, MovieModel } from '@/models';
-import { MovieSchema } from '@/types';
+import { MovieDetail, MovieSchema, Prettify } from '@/types';
 
 export const fetchMovies = async (page = '1', filtered: FilterQuery<MovieSchema> = {}, pageSize = PAGE_SIZE) => {
   try {
@@ -67,7 +67,7 @@ export const fetchMovieDetail = async (slug: string) => {
       }
     ])
     .select('-createdAt -updatedAt -__v')
-    .lean()) as MovieSchema | null;
+    .lean()) as MovieDetail | null;
 
   if (!movie) throw Error('Movie not found');
 

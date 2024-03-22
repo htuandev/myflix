@@ -2,15 +2,16 @@ import React from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { Play, PlayCircle } from 'lucide-react';
+import { FilterQuery } from 'mongoose';
 import CastCard from '@/components/shared/CastCard';
+import MovieCard from '@/components/shared/MovieCard';
 import MovieFacts from '@/components/shared/MovieFacts';
 import Poster from '@/components/shared/Poster';
-import Avatar from '@/components/shared/ProfileImage';
-import ProfileImage from '@/components/shared/ProfileImage';
 import { Button } from '@/components/ui/button';
 import { ContentType, Status } from '@/constants';
-import { hexToRgba, lightenColor, tmdbImageSrc } from '@/lib/utils';
-import { fetchMovieDetail } from '@/services';
+import { hexToRgba, tmdbImageSrc } from '@/lib/utils';
+import { fetchMovieDetail, fetchRandomMovies } from '@/services';
+import { MovieSchema } from '@/types';
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const { movie, casts } = await fetchMovieDetail(params.slug);
@@ -33,6 +34,18 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const episodes: { _id: string; slug: string }[] = [{ _id: '1', slug: 'episode-1' }];
 
   const { name, year, poster, backdrop, backdropColor, overview, slug, status, type } = movie;
+
+  const recommendedCount = type.includes(ContentType.Series) ? 6 : 12;
+
+  const filtered: FilterQuery<MovieSchema> = {
+    _id: { $ne: movie._id },
+    status: { $ne: Status.Trailer },
+    type: { $in: [type[0]] },
+    countries: { $in: movie.countries.map(({ _id }) => _id) },
+    genres: { $in: movie.genres.map(({ _id }) => _id) }
+  };
+
+  const recommended = await fetchRandomMovies(filtered, recommendedCount);
 
   const styles: { [key: string]: React.CSSProperties } = {
     bg: { backgroundImage: `url(${tmdbImageSrc(backdrop, 'w1920_and_h800_multi_faces')})` },
@@ -95,7 +108,18 @@ export default async function Page({ params }: { params: { slug: string } }) {
             <h2 className=' mb-4 text-2xl font-medium'>Diễn viên</h2>
             <div className=' grid grid-cols-3 gap-6 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10'>
               {casts.map((cast) => (
-                <CastCard key={cast._id} {...cast} />
+                <CastCard key={cast._id} {...cast} style={{ backgroundColor: backdropColor }} />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {recommended.length > 0 && (
+          <div className='mt-8'>
+            <h2 className=' mb-4 text-2xl font-medium'>Đề xuất cho bạn</h2>
+            <div className=' grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>
+              {recommended.map((movie) => (
+                <MovieCard {...(movie as MovieSchema)} key={movie._id as string} />
               ))}
             </div>
           </div>
