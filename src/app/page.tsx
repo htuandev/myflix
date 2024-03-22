@@ -1,6 +1,5 @@
 import Link from 'next/link';
-import { log } from 'console';
-import MovieCard from '@/components/MovieCard';
+import MovieCard from '@/components/shared/MovieCard';
 import { ContentType } from '@/constants';
 import { fetchMovies, fetchRandomMovies } from '@/services';
 import { MovieSchema } from '@/types';
@@ -19,7 +18,7 @@ export default async function Home() {
       <Link href='/phim-bo'>
         <h2 className=' text-heading'>Phim bộ mới cập nhật</h2>
       </Link>
-      <div className=' grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6'>
+      <div className=' grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>
         {series.movies.map((movie) => (
           <MovieCard {...(movie as MovieSchema)} key={movie._id as string} />
         ))}
@@ -28,7 +27,7 @@ export default async function Home() {
       <Link href='/phim-le'>
         <h2 className=' text-heading mt-6'>Phim lẻ mới cập nhật</h2>
       </Link>
-      <div className=' grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6'>
+      <div className=' grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>
         {single.movies.map((movie) => (
           <MovieCard {...(movie as MovieSchema)} key={movie._id as string} />
         ))}
@@ -37,7 +36,7 @@ export default async function Home() {
       <Link href='/phim-thuyet-minh'>
         <h2 className=' text-heading mt-6'>Phim thuyết minh mới cập nhật</h2>
       </Link>
-      <div className=' grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6'>
+      <div className=' grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>
         {vietnamese.movies.map((movie) => (
           <MovieCard {...(movie as MovieSchema)} key={movie._id as string} />
         ))}
@@ -46,7 +45,7 @@ export default async function Home() {
       <Link href='/phim-hoat-hinh'>
         <h2 className=' text-heading mt-6'>Phim hoạt hình mới cập nhật</h2>
       </Link>
-      <div className=' grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6'>
+      <div className=' grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>
         {animation.movies.map((movie) => (
           <MovieCard {...(movie as MovieSchema)} key={movie._id as string} />
         ))}
@@ -55,7 +54,7 @@ export default async function Home() {
       <Link href='/phim-muoi-nam-ve-truoc'>
         <h2 className=' text-heading mt-6'>10 năm về trước</h2>
       </Link>
-      <div className=' grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6'>
+      <div className=' grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>
         {tenYearsAgoMovies.map((movie) => (
           <MovieCard {...(movie as MovieSchema)} key={movie._id as string} />
         ))}

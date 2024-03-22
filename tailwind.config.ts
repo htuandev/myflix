@@ -80,7 +80,6 @@ const config = {
           marginLeft: "auto",
           marginRight: "auto",
           padding: theme("spacing.4"),
-          minHeight: "calc(100vh - 64px)",
           "@media (min-width: 1024px)": {
             padding: theme("spacing.8"),
           },

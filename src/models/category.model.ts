@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, models } from 'mongoose';
 import { dbCollection, dbDocument } from '@/constants';
 import { CategorySchema, CategoryType } from '@/types';
 
@@ -23,7 +23,7 @@ const categorySchema = (type: CategoryType) =>
 const Model = (type: CategoryType) => model<CategorySchema>(dbDocument[key(type)], categorySchema(type));
 
 export const CategoryModel = {
-  genres: Model('genres'),
-  networks: Model('networks'),
-  countries: Model('countries')
+  genres: models[dbDocument.genre] || Model('genres'),
+  networks: models[dbDocument.network] || Model('networks'),
+  countries: models[dbDocument.country] || Model('countries')
 };

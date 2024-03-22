@@ -1,6 +1,7 @@
 import { FilterQuery } from 'mongoose';
 import { PAGE_SIZE, Status } from '@/constants';
 import mongodb from '@/lib/mongodb';
+import { extractIdFromSlug } from '@/lib/utils';
 import { MovieModel } from '@/models';
 import { MovieSchema } from '@/types';
 
@@ -43,4 +44,32 @@ export const fetchRandomMovies = async (filtered: FilterQuery<MovieSchema> = {},
     { $sample: { size } },
     { $project: { name: 1, poster: 1, slug: 1, backdropColor: 1 } }
   ]);
+};
+
+export const fetchMovieDetail = async (slug: string) => {
+  await mongodb();
+
+  const id = extractIdFromSlug(slug);
+
+  const movie = (await MovieModel.findById(id)
+    .populate([
+      {
+        path: 'genres',
+        select: 'name slug'
+      },
+      {
+        path: 'countries',
+        select: 'name slug'
+      },
+      {
+        path: 'networks',
+        select: 'name slug'
+      }
+    ])
+    .select('-createdAt -updatedAt -__v')
+    .lean()) as MovieSchema | null;
+
+  if (!movie) throw Error('Movie not found');
+
+  return { movie };
 };

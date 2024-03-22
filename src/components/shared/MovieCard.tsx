@@ -3,7 +3,7 @@ import { hexToRgba, lightenColor } from '@/lib/utils';
 import { MovieSchema } from '@/types';
 import Poster from './Poster';
 
-export default function MovieCard({ _id, name, slug, poster, backdropColor }: MovieSchema) {
+const MovieCard = ({ _id, name, slug, poster, backdropColor }: MovieSchema) => {
   return (
     <Link
       href={`/movie/${slug}-${_id}`}
@@ -41,4 +41,6 @@ export default function MovieCard({ _id, name, slug, poster, backdropColor }: Mo
       </div>
     </Link>
   );
-}
+};
+
+export default MovieCard;
