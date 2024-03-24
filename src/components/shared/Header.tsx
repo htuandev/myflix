@@ -7,7 +7,7 @@ const Header = async () => {
 
   const years = categories.years.map(({ _id, name }) => ({
     title: name,
-    href: `/year/${_id}`
+    href: `/nam-phat-hanh/${_id}`
   }));
 
   const genres = categories.genres.map(({ _id, name, slug }) => ({
