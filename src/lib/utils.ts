@@ -2,7 +2,7 @@ import { type ClassValue, clsx } from 'clsx';
 import _ from 'lodash';
 import mongoose from 'mongoose';
 import { twMerge } from 'tailwind-merge';
-import { BACKDROP_COLOR } from '@/constants';
+import { BACKDROP_COLOR, idRegex } from '@/constants';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -61,6 +61,16 @@ export const lightenColor = (inputColor: string, percentage = 12): string => {
 };
 
 /**
+ * Validates the provided ID using the idRegex.
+ *
+ * @param {string} id - The ID to be validated
+ * @return {boolean} Whether the provided ID passes the validation
+ */
+export const validatedId = (id: string) => {
+  return idRegex.test(id);
+};
+
+/**
  * Extracts the ID from the given slug.
  *
  * @param {string} slug - The input slug
@@ -68,7 +78,7 @@ export const lightenColor = (inputColor: string, percentage = 12): string => {
  */
 export const extractIdFromSlug = (slug: string): string => {
   const lastIndex = slug.lastIndexOf('-');
-  return lastIndex === -1 ? '' : slug.slice(lastIndex + 1);
+  return lastIndex === -1 ? (validatedId(slug) ? slug : '') : slug.slice(lastIndex + 1);
 };
 
 /**

@@ -22,3 +22,16 @@ export const TMDB_IMAGE_SIZES = {
 };
 
 export const BACKDROP_COLOR = '#202020';
+
+/**
+ * Regular expression for validating id.
+ *
+ * IDs are 12 alphanumeric characters long.
+ * This regex ensures that only valid IDs are accepted.
+ *
+ * [a-zA-Z0-9] - Any character that can be a capital letter, lowercase letter, or digit.
+ *
+ * {12} - Exactly 12 characters long.
+ *
+ */
+export const idRegex = /^[a-zA-Z0-9]{12}$/;
