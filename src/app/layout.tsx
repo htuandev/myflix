@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import Footer from '@/components/shared/Footer';
 import Header from '@/components/shared/Header';
 import { METADATA_TITLE } from '@/constants';
@@ -24,6 +25,7 @@ export default function RootLayout({
       <body className={`dark ${roboto.className} flex min-h-screen flex-col`}>
         <Header />
         <main className=' flex-1'>{children}</main>
+        <SpeedInsights />
         <Footer />
       </body>
     </html>
