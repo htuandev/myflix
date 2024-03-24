@@ -2,9 +2,10 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { PlayCircleIcon } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ContentType } from '@/constants';
-import { chunkArray } from '@/lib/utils';
+import { chunkArray, cn } from '@/lib/utils';
 import { IEpisodeList } from '@/types';
 import Thumbnail from './Thumbnail';
 
@@ -15,9 +16,10 @@ type Props = {
   movieSlug: string;
   currentEpisodeId: string;
   style?: React.CSSProperties;
+  isPlaying?: boolean;
 };
 
-const EpisodeList = ({ episodes, type, movieName, movieSlug, currentEpisodeId, style }: Props) => {
+const EpisodeList = ({ episodes, type, movieName, movieSlug, currentEpisodeId, style, isPlaying }: Props) => {
   const itemsPerPage = 24;
   const pages = Math.ceil(episodes.length / itemsPerPage);
 
@@ -60,11 +62,14 @@ const EpisodeList = ({ episodes, type, movieName, movieSlug, currentEpisodeId, s
             </Select>
           )}
         </div>
-        <div className='grid grid-cols-2 gap-4 xl:gap-6 md:grid-cols-3 lg:grid-cols-4'>
+        <div className='grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:gap-6'>
           {chunkedEpisodes[page].map((episode) => (
-            <Link key={episode._id} href={`/play/${movieSlug}-${episode.slug}-${episode._id}`}>
+            <Link key={episode._id} href={`/play/${movieSlug}-${episode.slug}-${episode._id}`} onClick={(e) => isPlaying && episode._id === currentEpisodeId && e.preventDefault()}>
               <Thumbnail src={episode.thumbnail} style={style} size='md' />
-              <p className='mt-2 font-medium'>{movieName} - {episode.name}</p>
+              <div className={cn('mt-2 font-medium', isPlaying && episode._id === currentEpisodeId && 'text-primary')}>
+                {isPlaying && episode._id === currentEpisodeId && <PlayCircleIcon className='inline-block mr-2' />}
+                {movieName} - {episode.name}
+              </div>
             </Link>
           ))}
         </div>

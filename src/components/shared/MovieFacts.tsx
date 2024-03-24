@@ -18,8 +18,8 @@ const MovieFacts = (movie: MovieDetail) => {
             ? 'Vietnamese Ver.'
             : 'Vietnamese Sub'
           : status === Status.Full
-            ? `Full ${totalEpisodes} eps`
-            : `Updated to ${episodes}/${totalEpisodes} eps`}
+            ? `Trọn bộ ${totalEpisodes} tập`
+            : `Cập nhật tập ${episodes}/${totalEpisodes}`}
       </li>
     )
   ].filter(Boolean);
