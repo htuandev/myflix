@@ -1,14 +1,11 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { Play } from 'lucide-react';
 import { FilterQuery } from 'mongoose';
 import CastCard from '@/components/shared/CastCard';
 import EpisodeList from '@/components/shared/EpisodeList';
 import MovieCard from '@/components/shared/MovieCard';
 import MovieFacts from '@/components/shared/MovieFacts';
-import Poster from '@/components/shared/Poster';
-import YoutubeModal from '@/components/shared/YoutubeModal';
-import { Button } from '@/components/ui/button';
+import VideoPlayer from '@/components/shared/VideoPlayer';
 import { ContentType, Status } from '@/constants';
 import { extractIdFromSlug, hexToRgba, tmdbImageSrc } from '@/lib/utils';
 import { fetchEpisodeDetail, fetchMovieDetail, fetchRandomMovies } from '@/services';
@@ -35,7 +32,7 @@ export default async function Page({ params }: { params: NextQuery }) {
   const episode = await fetchEpisodeDetail(params.slug);
   const { movie, casts, episodes } = await fetchMovieDetail(episode.movie);
 
-  const { name, year, poster, backdrop, backdropColor, overview, slug, status, type } = movie;
+  const { name, backdrop, backdropColor, overview, slug, type } = movie;
 
   const recommendedCount = type.includes(ContentType.Series) ? 6 : 12;
 
@@ -59,7 +56,8 @@ export default async function Page({ params }: { params: NextQuery }) {
 
   return (
     <section>
-      <div className='container xl:pt-8'>
+      <div className='container max-w-6xl xl:pt-4'>
+        <VideoPlayer source={episode.link} thumbnail={episode.thumbnail || movie.thumbnail} />
         <Link href={`/album/${slug}-${movie._id}`} className=' group'>
           <h1 className='text-heading inline-block '>
             {name}
@@ -72,7 +70,7 @@ export default async function Page({ params }: { params: NextQuery }) {
         <p className='mt-4'> {overview}</p>
         {casts.length > 0 && (
           <div className='my-8'>
-            <div className=' grid grid-cols-3 gap-6 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10'>
+            <div className=' grid grid-cols-3 gap-6 md:grid-cols-6 lg:grid-cols-8'>
               {casts.map((cast) => (
                 <CastCard key={cast._id} {...cast} style={styles.bgColor} />
               ))}
@@ -93,7 +91,7 @@ export default async function Page({ params }: { params: NextQuery }) {
         {recommended.length > 0 && (
           <div className='mt-8'>
             <h2 className=' mb-4 text-2xl font-medium'>Đề xuất cho bạn</h2>
-            <div className=' grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>
+            <div className=' grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4'>
               {recommended.map((movie) => (
                 <MovieCard {...(movie as MovieSchema)} key={movie._id} />
               ))}

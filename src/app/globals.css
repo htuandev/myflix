@@ -63,3 +63,22 @@
     @apply hover:text-primary transition-colors duration-300
   }
 }
+
+.plyr--video {
+  aspect-ratio: 16/9;
+  margin-bottom: 1rem;
+}
+
+.plyr__control--overlaid {
+  background: hsl(var(--primary)) !important;
+}
+
+.plyr--full-ui input[type=range] {
+  color: hsl(var(--primary)) !important;
+}
+
+.plyr--video .plyr__control:focus-visible,
+.plyr--video .plyr__control:hover,
+.plyr--video .plyr__control[aria-expanded=true] {
+  background: hsl(var(--primary)) !important;
+}
