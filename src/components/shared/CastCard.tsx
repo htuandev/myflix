@@ -12,7 +12,7 @@ type Props = Prettify<
 
 const CastCard = ({ _id, name, slug, gender, profileImage, character, style }: Props) => {
   return (
-    <Link href={`/person/${slug}-${_id}`} className='flex w-full justify-center text-center'>
+    <Link href={`/dien-vien/${slug}-${_id}`} className='flex w-full justify-center text-center'>
       <div className=' w-full'>
         <ProfileImage src={profileImage} gender={gender} alt={name} style={style} />
         <h3 className=' mt-2 text-sm font-medium break-words'>{name}</h3>

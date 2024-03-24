@@ -87,7 +87,7 @@ export const fetchMovieDetail = async (slug: string) => {
   }[];
 
   const casts = credits.map((credit) => ({
-    _id: credit._id,
+    _id: credit.person._id,
     name: credit.person.name,
     slug: credit.person.slug,
     gender: credit.person.gender,
@@ -98,4 +98,40 @@ export const fetchMovieDetail = async (slug: string) => {
   const episodes = (await EpisodeModel.find({ movie: id }).select('name slug thumbnail').lean()) as IEpisodeList;
 
   return { movie, casts, episodes };
+};
+
+export const fetchMoviesByPersonId = async (personId: string, page = '1', pageSize = PAGE_SIZE) => {
+  try {
+    await mongodb();
+
+    const filtered = { person: personId };
+
+    const pageNumber = parseInt(page) || 1;
+
+    if (pageNumber < 1) throw Error('Page must be greater than 0');
+
+    const totalMovies = await CreditModel.countDocuments(filtered).lean();
+    const totalPages = Math.ceil(totalMovies / pageSize);
+
+    if (totalPages === 0) return { movies: [], totalPages: 1, totalMovies };
+    if (totalPages < pageNumber) throw Error('Page not found');
+
+    const skip = (pageNumber - 1) * pageSize;
+
+    const movies = (
+      await CreditModel.find(filtered)
+        .populate('movie', 'name slug poster backdropColor updatedAt')
+        .select('movie')
+        .skip(skip)
+        .limit(pageSize)
+        .lean()
+    )
+      .map(({ movie }) => movie)
+      .sort((a, b) => b.updatedAt - a.updatedAt) as MovieSchema[];
+
+    return { movies, totalPages, totalMovies };
+  } catch (error) {
+    console.log(error);
+    throw new Error('Error fetching movies');
+  }
 };
