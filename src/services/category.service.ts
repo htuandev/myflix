@@ -20,6 +20,8 @@ export const fetchCategory = async (slug: string, type: CategoryType): Promise<C
 };
 
 export const fetchMovieCategories = async () => {
+  await mongodb();
+
   const years = (await MovieModel.aggregate(pipelines.years())) as Prettify<IMovieYears>;
   const genres = (await MovieModel.aggregate(pipelines.categories('genres'))) as Prettify<MovieCategories>;
   const countries = (await MovieModel.aggregate(pipelines.categories('countries'))) as Prettify<MovieCategories>;
