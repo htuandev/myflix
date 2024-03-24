@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import Footer from '@/components/shared/Footer';
 import Header from '@/components/shared/Header';
@@ -26,6 +27,7 @@ export default function RootLayout({
         <Header />
         <main className=' flex-1'>{children}</main>
         <SpeedInsights />
+        <Analytics />
         <Footer />
       </body>
     </html>
