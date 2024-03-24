@@ -26,10 +26,14 @@ export type MovieSchema = {
   views: number;
 };
 
+export type MovieCategories = { _id: string; name: string; slug: string }[];
+
 export type MovieDetail = Prettify<
   Omit<MovieSchema, 'genres' | 'countries' | 'networks'> & {
-    genres: { _id: string; name: string; slug: string }[];
-    countries: { _id: string; name: string; slug: string }[];
-    networks: { _id: string; name: string; slug: string }[];
+    genres: MovieCategories;
+    countries: MovieCategories;
+    networks: MovieCategories;
   }
 >;
+
+export type IMovieYears = { _id: number; name: string }[];

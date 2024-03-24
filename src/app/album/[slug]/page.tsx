@@ -58,7 +58,7 @@ export default async function Page({ params }: { params: NextQuery }) {
 
   return (
     <section>
-      <div className='flex-center relative z-10 text-opacity-95'>
+      <div className='flex-center relative z-[5] text-opacity-95'>
         <div
           className=' absolute top-0 h-56 w-full overflow-hidden bg-cover bg-center bg-no-repeat md:h-full md:bg-[right_-180px_top]'
           style={styles.bg}
@@ -72,7 +72,7 @@ export default async function Page({ params }: { params: NextQuery }) {
                 <Poster src={poster} alt={name} size='lg' style={styles.bgColor} />
               </div>
             </div>
-            <div className='relative z-10 w-full md:ml-8 md:w-auto'>
+            <div className='relative z-[5] w-full md:ml-8 md:w-auto'>
               <h1 className='text-heading '>
                 {name}
                 {!!year && year > 0 && <span className=' font-medium'> ({year})</span>}
