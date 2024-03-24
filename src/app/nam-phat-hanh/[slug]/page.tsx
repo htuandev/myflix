@@ -1,12 +1,12 @@
 import { Metadata } from 'next';
 import MovieCard from '@/components/shared/MovieCard';
 import Pagination from '@/components/shared/Pagination';
-import { ContentType } from '@/constants';
 import { fetchMovies } from '@/services';
 import { NextQuery } from '@/types';
 
 type Props = {
-  [key: string]: NextQuery;
+  params: NextQuery;
+  searchParams: NextQuery;
 };
 
 export async function generateMetadata({ searchParams, params }: Props): Promise<Metadata> {
