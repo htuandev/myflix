@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
+import Footer from '@/components/shared/Footer';
+import Header from '@/components/shared/Header';
 import { METADATA_TITLE } from '@/constants';
 import './globals.css';
 
@@ -19,7 +21,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='vi'>
-      <body className={`dark ${roboto.className}`}>{children}</body>
+      <body className={`dark ${roboto.className} flex min-h-screen flex-col`}>
+        <Header />
+        <main className=' flex-1'>{children}</main>
+        <Footer />
+      </body>
     </html>
   );
 }

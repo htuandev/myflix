@@ -25,7 +25,7 @@ export default async function Page({ searchParams, params }: Params) {
   const { movies, totalPages } = await fetchMovies(searchParams.page, { countries: extractIdFromSlug(params.slug) });
 
   return (
-    <section className=' container flex min-h-screen flex-col'>
+    <section className=' container flex flex-col'>
       <h1 className='text-heading mb-6 text-center'>Phim {name}</h1>
       <div className=' flex-1'>
         <div className=' grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>

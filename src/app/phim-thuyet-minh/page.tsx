@@ -15,7 +15,7 @@ export default async function Page({ searchParams }: { searchParams: NextQuery }
   const { movies, totalPages } = await fetchMovies(searchParams.page, { type: ContentType.Vietnamese });
 
   return (
-    <section className=' container flex min-h-screen flex-col'>
+    <section className=' container flex flex-col'>
       <h1 className='text-heading mb-6 text-center'>Phim Thuyết Minh Mới Cập Nhật</h1>
       <div className=' flex-1'>
         <div className=' grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>
