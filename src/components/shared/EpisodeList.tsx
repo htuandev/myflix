@@ -64,10 +64,15 @@ const EpisodeList = ({ episodes, type, movieName, movieSlug, currentEpisodeId, s
         </div>
         <div className='grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:gap-6'>
           {chunkedEpisodes[page].map((episode) => (
-            <Link key={episode._id} href={`/play/${movieSlug}-${episode.slug}-${episode._id}`} onClick={(e) => isPlaying && episode._id === currentEpisodeId && e.preventDefault()}>
+            <Link
+              key={episode._id}
+              className='link'
+              href={`/play/${movieSlug}-${episode.slug}-${episode._id}`}
+              onClick={(e) => isPlaying && episode._id === currentEpisodeId && e.preventDefault()}
+            >
               <Thumbnail src={episode.thumbnail} style={style} size='md' />
               <div className={cn('mt-2 font-medium', isPlaying && episode._id === currentEpisodeId && 'text-primary')}>
-                {isPlaying && episode._id === currentEpisodeId && <PlayCircleIcon className='inline-block mr-2' />}
+                {isPlaying && episode._id === currentEpisodeId && <PlayCircleIcon className='mr-2 inline-block' />}
                 {movieName} - {episode.name}
               </div>
             </Link>

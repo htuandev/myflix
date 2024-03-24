@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef } from 'react';
 import Hls from 'hls.js';
-import Plyr from 'plyr';
 import 'plyr/dist/plyr.css';
 import { TMDB_IMAGE_SIZES } from '@/constants';
 import { tmdbImageSrc } from '@/lib/utils';
@@ -24,6 +23,8 @@ const VideoPlayer = ({ source, thumbnail }: Props) => {
       hls.attachMedia(video);
     }
 
+    const Plyr = require('plyr');
+
     const player = new Plyr(video, {
       controls: [
         'play-large', // The large play button in the center
@@ -35,7 +36,7 @@ const VideoPlayer = ({ source, thumbnail }: Props) => {
         'duration', // The full duration of the media
         'mute', // Toggle mute
         'volume', // Volume control
-        'pip', // Picture-in-picture (currently Safari only)
+        'pip', // Only supported on Safari 10+ (on MacOS Sierra+ and iOS 10+) and Chrome 70+
         'airplay', // Airplay (currently Safari only)
         'fullscreen' // Toggle fullscreen
       ],

@@ -11,7 +11,7 @@ export default async function Home() {
   const tenYearsAgoMovies = await fetchRandomMovies({ year: { $lt: CURRENT_YEAR - 10, $nin: [0] } });
 
   return (
-    <main className='container'>
+    <section className='container'>
       <Link href='/phim-bo'>
         <h2 className=' text-heading'>Phim bộ mới cập nhật</h2>
       </Link>
@@ -56,6 +56,6 @@ export default async function Home() {
           <MovieCard {...movie} key={movie._id} />
         ))}
       </div>
-    </main>
+    </section>
   );
 }

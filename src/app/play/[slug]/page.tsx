@@ -34,8 +34,6 @@ export default async function Page({ params }: { params: NextQuery }) {
 
   const { name, backdrop, backdropColor, overview, slug, type } = movie;
 
-  const recommendedCount = type.includes(ContentType.Series) ? 6 : 12;
-
   const filtered: FilterQuery<MovieSchema> = {
     _id: { $ne: movie._id },
     status: { $ne: Status.Trailer },
@@ -44,7 +42,7 @@ export default async function Page({ params }: { params: NextQuery }) {
     genres: { $in: movie.genres.map(({ _id }) => _id) }
   };
 
-  const recommended = await fetchRandomMovies(filtered, recommendedCount);
+  const recommended = await fetchRandomMovies(filtered, 12);
 
   const styles: { [key: string]: React.CSSProperties } = {
     bg: { backgroundImage: `url(${tmdbImageSrc(backdrop, 'w1920_and_h800_multi_faces')})` },
@@ -55,15 +53,13 @@ export default async function Page({ params }: { params: NextQuery }) {
   };
 
   return (
-    <section>
+    <>
       <div className='container max-w-6xl xl:pt-4'>
         <VideoPlayer source={episode.link} thumbnail={episode.thumbnail || movie.thumbnail} />
         <Link href={`/album/${slug}-${movie._id}`} className=' group'>
-          <h1 className='text-heading inline-block '>
+          <h1 className='link text-heading'>
             {name}
-            {type.includes(ContentType.Series) && (
-              <span className=' font-medium group-hover:invisible'> - {episode.name}</span>
-            )}
+            {type.includes(ContentType.Series) && <span className='group-hover:invisible'> - {episode.name}</span>}
           </h1>
         </Link>
         <MovieFacts {...movie} />
@@ -99,6 +95,6 @@ export default async function Page({ params }: { params: NextQuery }) {
           </div>
         )}
       </div>
-    </section>
+    </>
   );
 }

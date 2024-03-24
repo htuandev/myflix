@@ -23,7 +23,7 @@ const Pagination = ({ page, totalPages, className }: Props) => {
         showControls
         showShadow
         radius='full'
-        className={cn('mt-4 overflow-x-auto flex-center', className)}
+        className={cn('flex-center mt-4 overflow-x-auto', className)}
         onChange={(page) => {
           router.push(`${pathname}?page=${page}`);
         }}

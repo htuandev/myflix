@@ -25,10 +25,10 @@ export default async function Page({ searchParams, params }: Params) {
   const { movies, totalPages } = await fetchMoviesByPersonId(extractIdFromSlug(params.slug), searchParams.page);
 
   return (
-    <section className=' container xl:pt-8 flex flex-col'>
+    <section className=' container flex flex-col xl:pt-8'>
       <div className='flex-center'>
-        <div className='flex gap-6 mb-6'>
-          <ProfileImage src={profileImage} gender={gender} alt={name} className=' w-20 md:w-32 h-20 md:h-32' />
+        <div className='mb-6 flex gap-6'>
+          <ProfileImage src={profileImage} gender={gender} alt={name} className=' h-20 w-20 md:h-32 md:w-32' />
           <div className=' flex flex-col justify-center gap-4'>
             <h1 className='text-heading mb-0'>{name}</h1>
             {birthday && <p className=' hidden md:block'>Ngày sinh: {birthday}</p>}

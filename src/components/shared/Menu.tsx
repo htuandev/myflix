@@ -60,7 +60,8 @@ const movies: { title: string; href: string }[] = [
   {
     title: 'Phim Hoạt Hình',
     href: '/phim-hoat-hinh'
-  },  {
+  },
+  {
     title: 'Shows',
     href: '/shows'
   },
@@ -157,7 +158,7 @@ const ListItem = React.forwardRef<React.ElementRef<'a'>, React.ComponentPropsWit
           <a
             ref={ref}
             className={cn(
-              'line-clamp-2 block select-none space-y-1 rounded-md p-3 text-sm leading-none text-muted-foreground no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
+              'line-clamp-2 block select-none space-y-1 rounded-md p-3 text-sm leading-none text-muted-foreground no-underline outline-none transition-colors hover:bg-card hover:text-accent-foreground focus:bg-card focus:text-accent-foreground',
               className
             )}
             {...props}

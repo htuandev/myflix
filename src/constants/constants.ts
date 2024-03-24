@@ -35,3 +35,5 @@ export const BACKDROP_COLOR = '#202020';
  *
  */
 export const idRegex = /^[a-zA-Z0-9]{12}$/;
+
+export const htuandev = process.env.HTUANDEV || 'https://htuan.dev';

@@ -8,7 +8,7 @@ const MovieCard = ({ _id, name, slug, poster, backdropColor }: MovieSchema) => {
     <Link
       href={`/album/${slug}-${_id}`}
       style={{ backgroundColor: lightenColor(backdropColor) }}
-      className=' max-w-full overflow-hidden rounded-lg hover:text-foreground'
+      className=' max-w-full overflow-hidden rounded-lg'
     >
       <div className=' group'>
         <div className=' relative overflow-hidden'>

@@ -57,7 +57,7 @@ export default async function Page({ params }: { params: NextQuery }) {
   };
 
   return (
-    <section>
+    <>
       <div className='flex-center relative z-[5] text-opacity-95'>
         <div
           className=' absolute top-0 h-56 w-full overflow-hidden bg-cover bg-center bg-no-repeat md:h-full md:bg-[right_-180px_top]'
@@ -133,6 +133,6 @@ export default async function Page({ params }: { params: NextQuery }) {
           </div>
         )}
       </div>
-    </section>
+    </>
   );
 }
