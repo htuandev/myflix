@@ -1,3 +1,4 @@
+import { unstable_noStore as noStore } from 'next/cache';
 import { FilterQuery } from 'mongoose';
 import { Gender, PAGE_SIZE, Status } from '@/constants';
 import mongodb from '@/lib/mongodb';
@@ -12,6 +13,7 @@ export const fetchMovies = async (
 ): Promise<{ movies: MovieSchema[]; totalPages: number; totalMovies: number }> => {
   try {
     await mongodb();
+    noStore();
 
     const pageNumber = parseInt(page) || 1;
 

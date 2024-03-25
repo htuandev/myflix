@@ -4,10 +4,10 @@ import { CURRENT_YEAR, ContentType } from '@/constants';
 import { fetchMovies, fetchRandomMovies } from '@/services';
 
 export default async function Home() {
-  const series = await fetchMovies('1', { type: ContentType.Series }, 12);
-  const single = await fetchMovies('1', { type: ContentType.Single }, 12);
-  const vietnamese = await fetchMovies('1', { type: ContentType.Vietnamese }, 6);
-  const animation = await fetchMovies('1', { type: ContentType.Animation }, 6);
+  const series = await fetchMovies(undefined, { type: ContentType.Series }, 12);
+  const single = await fetchMovies(undefined, { type: ContentType.Single }, 12);
+  const vietnamese = await fetchMovies(undefined, { type: ContentType.Vietnamese }, 6);
+  const animation = await fetchMovies(undefined, { type: ContentType.Animation }, 6);
   const tenYearsAgoMovies = await fetchRandomMovies({ year: { $lt: CURRENT_YEAR - 10, $nin: [0] } });
 
   return (
