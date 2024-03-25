@@ -3,6 +3,8 @@ import MovieCard from '@/components/shared/MovieCard';
 import { CURRENT_YEAR, ContentType } from '@/constants';
 import { fetchMovies, fetchRandomMovies } from '@/services';
 
+export const revalidate = 0;
+
 export default async function Home() {
   const series = await fetchMovies(undefined, { type: ContentType.Series }, 12);
   const single = await fetchMovies(undefined, { type: ContentType.Single }, 12);
