@@ -84,7 +84,7 @@ export function Menu({ genres, countries, networks, years }: Props) {
         <NavigationMenuItem>
           <NavigationMenuTrigger>Phim Mới</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className='grid w-[90vw] max-w-[1440px] gap-3 p-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>
+            <ul className='grid grid-cols-2  w-[90vw] max-w-[1440px] gap-3 p-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>
               {movies.map(({ title, href }) => (
                 <ListItem key={title} title={title} href={href}>
                   {title}
@@ -97,7 +97,7 @@ export function Menu({ genres, countries, networks, years }: Props) {
         <NavigationMenuItem>
           <NavigationMenuTrigger>Thể Loại</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className='grid w-[90vw] max-w-[1440px] gap-3 p-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>
+            <ul className='grid grid-cols-2  w-[90vw] max-w-[1440px] gap-3 p-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>
               {genres.map(({ title, href }) => (
                 <ListItem key={title} title={title} href={href}>
                   {title}
@@ -107,10 +107,10 @@ export function Menu({ genres, countries, networks, years }: Props) {
           </NavigationMenuContent>
         </NavigationMenuItem>
 
-        <NavigationMenuItem>
+        <NavigationMenuItem className='hidden md:block'>
           <NavigationMenuTrigger>Quốc Gia</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className='grid w-[90vw] max-w-[1440px] gap-3 p-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>
+            <ul className='grid grid-cols-2  w-[90vw] max-w-[1440px] gap-3 p-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>
               {countries.map(({ title, href }) => (
                 <ListItem key={title} title={title} href={href}>
                   {title}
@@ -120,10 +120,10 @@ export function Menu({ genres, countries, networks, years }: Props) {
           </NavigationMenuContent>
         </NavigationMenuItem>
 
-        <NavigationMenuItem>
+        <NavigationMenuItem className='hidden md:block'>
           <NavigationMenuTrigger>Network</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className='grid w-[90vw] max-w-[1440px] gap-3 p-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>
+            <ul className='grid grid-cols-2  w-[90vw] max-w-[1440px] gap-3 p-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>
               {networks.map(({ title, href }) => (
                 <ListItem key={title} title={title} href={href}>
                   {title}
@@ -133,10 +133,10 @@ export function Menu({ genres, countries, networks, years }: Props) {
           </NavigationMenuContent>
         </NavigationMenuItem>
 
-        <NavigationMenuItem>
+        <NavigationMenuItem className='hidden md:block'>
           <NavigationMenuTrigger>Năm</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className='grid w-[90vw] max-w-[1440px] gap-3 p-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>
+            <ul className='grid grid-cols-2  w-[90vw] max-w-[1440px] gap-3 p-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>
               {years.map(({ title, href }) => (
                 <ListItem key={title} title={title} href={href}>
                   {title}
