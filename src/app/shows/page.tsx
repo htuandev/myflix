@@ -1,13 +1,20 @@
 import { Metadata } from 'next';
 import MovieCard from '@/components/shared/MovieCard';
 import Pagination from '@/components/shared/Pagination';
-import { CURRENT_YEAR, ContentType } from '@/constants';
+import { ContentType } from '@/constants';
 import { fetchMovies } from '@/services';
 import { NextQuery } from '@/types';
 
 export async function generateMetadata({ searchParams }: { searchParams: NextQuery }): Promise<Metadata> {
+  const { movies } = await fetchMovies(searchParams.page, { type: ContentType.Shows });
+
+  const title = `Top Shows Mới Cập Nhật${Number(searchParams.page) > 1 ? ` - Trang ${searchParams.page}` : ''} | Myflix`;
+  const description = `Danh sách shows mới cập nhật | Myflix`;
+
   return {
-    title: `Top Shows Mới Nhất ${CURRENT_YEAR}${Number(searchParams.page) > 1 ? ` - Trang ${searchParams.page}` : ''} | Myflix`
+    title,
+    description,
+    openGraph: { title, description, images: movies.map((movie) => movie.thumbnail || movie.backdrop) }
   };
 }
 

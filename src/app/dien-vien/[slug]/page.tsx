@@ -12,10 +12,19 @@ type Params = {
 };
 
 export async function generateMetadata({ params, searchParams }: Params): Promise<Metadata> {
-  const { name } = await fetchPerson(params.slug);
+  const { name, profileImage } = await fetchPerson(params.slug);
+
+  const title = `${name}${Number(searchParams.page) > 1 ? ` | Phim tham gia - Trang ${searchParams.page}` : ''} | Myflix`;
+  const description = `Danh sách phim ${name} | Myflix`;
+
   return {
-    title: `${name}${Number(searchParams.page) > 1 ? ` | Phim tham gia - Trang ${searchParams.page}` : ''} | Myflix`,
-    description: `Danh sách phim của ${name} | Myflix`
+    title,
+    description,
+    openGraph: {
+      images: profileImage,
+      title,
+      description
+    }
   };
 }
 

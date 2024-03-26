@@ -1,9 +1,21 @@
+import { Metadata } from 'next';
 import Link from 'next/link';
 import MovieCard from '@/components/shared/MovieCard';
-import { CURRENT_YEAR, ContentType } from '@/constants';
+import { CURRENT_YEAR, ContentType, METADATA_TITLE, Status } from '@/constants';
 import { fetchMovies, fetchRandomMovies } from '@/services';
 
 export const revalidate = 0;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const movies = await fetchRandomMovies({ year: CURRENT_YEAR, status: { $ne: Status.Trailer } }, 1);
+
+  const title = METADATA_TITLE;
+
+  return {
+    title,
+    openGraph: { title, images: movies.map((movie) => movie.backdrop) }
+  };
+}
 
 export default async function Home() {
   const series = await fetchMovies(undefined, { type: ContentType.Series }, 12);

@@ -12,9 +12,15 @@ type Params = {
 
 export async function generateMetadata({ params, searchParams }: Params): Promise<Metadata> {
   const { name } = await fetchCategory(params.slug, 'genres');
+  const { movies } = await fetchMovies(searchParams.page, { countries: extractIdFromSlug(params.slug) });
+
+  const title = `Phim ${name}${Number(searchParams.page) > 1 ? ` - Trang ${searchParams.page}` : ''} | Myflix`;
+  const description = `Danh sách phim ${name} mới cập nhật | Myflix`;
+
   return {
-    title: `Phim ${name}${Number(searchParams.page) > 1 ? ` - Trang ${searchParams.page}` : ''} | Myflix`,
-    description: `Danh sách phim ${name} | Myflix`
+    title,
+    description,
+    openGraph: { title, description, images: movies.map((movie) => movie.thumbnail || movie.backdrop) }
   };
 }
 

@@ -15,15 +15,18 @@ export async function generateMetadata({ params }: { params: NextQuery }): Promi
   const episode = await fetchEpisodeDetail(params.slug);
   const { movie } = await fetchMovieDetail(episode.movie);
 
-  const { name, year, poster, backdrop, thumbnail, overview } = movie;
+  const { name, year, backdrop, thumbnail, overview } = movie;
+
+  const title = `${name} (${year}) - ${episode.name} | Myflix`;
+  const description = overview;
 
   return {
-    title: `${name} (${year}) - ${episode.name} | Myflix`,
-    description: overview,
+    title,
+    description,
     openGraph: {
-      images: [poster, backdrop, thumbnail],
-      title: `${name} (${year}) | Myflix`,
-      description: overview
+      images: episode.thumbnail || thumbnail || backdrop,
+      title,
+      description
     }
   };
 }
@@ -57,7 +60,7 @@ export default async function Page({ params }: { params: NextQuery }) {
       <div className='container max-w-6xl xl:pt-4'>
         <VideoPlayer source={episode.link} thumbnail={episode.thumbnail || movie.thumbnail} />
         <Link href={`/album/${slug}-${movie._id}`} className=' group'>
-          <h1 className='link text-heading'>
+          <h1 className='text-heading link'>
             {name}
             {type.includes(ContentType.Series) && <span className='group-hover:invisible'> - {episode.name}</span>}
           </h1>

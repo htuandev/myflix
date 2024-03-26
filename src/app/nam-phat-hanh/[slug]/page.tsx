@@ -10,8 +10,15 @@ type Props = {
 };
 
 export async function generateMetadata({ searchParams, params }: Props): Promise<Metadata> {
+  const title = `Phim Phát Hành Năm ${params.slug}${Number(searchParams.page) > 1 ? ` - Trang ${searchParams.page}` : ''} | Myflix`;
+  const description = `Danh sách phim phát hành năm ${params.slug} mới cập nhật | Myflix`;
+
+  const { movies } = await fetchMovies(searchParams.page, { year: params.slug });
+
   return {
-    title: `Phim Phát Hành Năm ${params.slug}${Number(searchParams.page) > 1 ? ` - Trang ${searchParams.page}` : ''} | Myflix`
+    title,
+    description,
+    openGraph: { title, description, images: movies.map((movie) => movie.thumbnail || movie.backdrop) }
   };
 }
 

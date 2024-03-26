@@ -18,15 +18,18 @@ import { MovieSchema, NextQuery } from '@/types';
 export async function generateMetadata({ params }: { params: NextQuery }): Promise<Metadata> {
   const { movie } = await fetchMovieDetail(params.slug);
 
-  const { name, year, poster, backdrop, thumbnail, overview } = movie;
+  const { name, year, backdrop, thumbnail, overview } = movie;
+
+  const title = `${name} (${year}) | Myflix`;
+  const description = overview;
 
   return {
-    title: `${name} (${year}) | Myflix`,
-    description: overview,
+    title,
+    description,
     openGraph: {
-      images: [poster, backdrop, thumbnail],
-      title: `${name} (${year}) | Myflix`,
-      description: overview
+      title,
+      description,
+      images: thumbnail || backdrop
     }
   };
 }

@@ -6,8 +6,15 @@ import { fetchMovies } from '@/services';
 import { NextQuery } from '@/types';
 
 export async function generateMetadata({ searchParams }: { searchParams: NextQuery }): Promise<Metadata> {
+  const { movies } = await fetchMovies(searchParams.page, { year: { $lt: CURRENT_YEAR - 10, $nin: [0] } });
+
+  const title = `Top Phim Mười Năm Về Trước Hay Mới Cập Nhật${Number(searchParams.page) > 1 ? ` - Trang ${searchParams.page}` : ''} | Myflix`;
+  const description = `Danh sách phim mười năm về trước mới cập nhật | Myflix`;
+
   return {
-    title: `Top Phim Hay Mười Năm Về Trước Mới Nhất ${CURRENT_YEAR}${Number(searchParams.page) > 1 ? ` - Trang ${searchParams.page}` : ''} | Myflix`
+    title,
+    description,
+    openGraph: { title, description, images: movies.map((movie) => movie.thumbnail || movie.backdrop) }
   };
 }
 
