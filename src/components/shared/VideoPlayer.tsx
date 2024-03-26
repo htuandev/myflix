@@ -17,8 +17,10 @@ const VideoPlayer = ({ source, thumbnail }: Props) => {
   useEffect(() => {
     const video = videoRef.current!;
 
+    let hls: Hls | null;
+
     if (Hls.isSupported()) {
-      const hls = new Hls();
+      hls = new Hls();
       hls.loadSource(source);
       hls.attachMedia(video);
     }
@@ -44,6 +46,8 @@ const VideoPlayer = ({ source, thumbnail }: Props) => {
     });
 
     player.play();
+
+    return () => hls?.destroy();
   });
 
   return <video ref={videoRef} poster={tmdbImageSrc(thumbnail, TMDB_IMAGE_SIZES.thumbnail.lg)} />;
