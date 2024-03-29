@@ -28,7 +28,7 @@ export const fetchMovies = async (
     const movies = (await MovieModel.find(filtered)
       .find({ status: { $ne: Status.Trailer }, ...filtered })
       .sort({ updatedAt: 'desc' })
-      .select(' name slug poster backdropColor')
+      .select(' name slug poster backdropColor backdrop')
       .skip(skip)
       .limit(pageSize)
       .lean()) as Prettify<MovieSchema>[];
@@ -46,7 +46,7 @@ export const fetchRandomMovies = async (filtered: FilterQuery<MovieSchema> = {},
   return MovieModel.aggregate([
     { $match: filtered },
     { $sample: { size } },
-    { $project: { name: 1, poster: 1, slug: 1, backdropColor: 1 } }
+    { $project: { name: 1, poster: 1, slug: 1, backdropColor: 1, backdrop: 1 } }
   ]);
 };
 

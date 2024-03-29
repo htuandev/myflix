@@ -10,11 +10,12 @@ export async function generateMetadata({ searchParams }: { searchParams: NextQue
 
   const title = `Top Phim Mười Năm Về Trước Hay Mới Cập Nhật${Number(searchParams.page) > 1 ? ` - Trang ${searchParams.page}` : ''} | Myflix`;
   const description = `Danh sách phim mười năm về trước mới cập nhật | Myflix`;
+  const images = movies.map((movie) => movie.backdrop);
 
   return {
     title,
     description,
-    openGraph: { title, description, images: movies.map((movie) => movie.thumbnail || movie.backdrop) }
+    openGraph: { title, description, images }
   };
 }
 

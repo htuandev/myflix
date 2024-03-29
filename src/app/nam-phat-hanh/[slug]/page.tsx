@@ -14,11 +14,12 @@ export async function generateMetadata({ searchParams, params }: Props): Promise
   const description = `Danh sách phim phát hành năm ${params.slug} mới cập nhật | Myflix`;
 
   const { movies } = await fetchMovies(searchParams.page, { year: params.slug });
+  const images = movies.map((movie) => movie.backdrop);
 
   return {
     title,
     description,
-    openGraph: { title, description, images: movies.map((movie) => movie.thumbnail || movie.backdrop) }
+    openGraph: { title, description, images }
   };
 }
 

@@ -16,11 +16,12 @@ export async function generateMetadata({ params, searchParams }: Params): Promis
 
   const title = `Phim ${name}${Number(searchParams.page) > 1 ? ` - Trang ${searchParams.page}` : ''} | Myflix`;
   const description = `Danh sách phim ${name} mới cập nhật | Myflix`;
+  const images = movies.map((movie) => movie.backdrop);
 
   return {
     title,
     description,
-    openGraph: { title, description, images: movies.map((movie) => movie.thumbnail || movie.backdrop) }
+    openGraph: { title, description, images }
   };
 }
 
